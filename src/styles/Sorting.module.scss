@@ -1,0 +1,56 @@
+@import './global.scss';
+
+.sorting {
+  width: 35rem;
+  display: flex;
+  align-items: center;
+
+  &_title {
+    text-transform: uppercase;
+    color: $colorTitle;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition:
+      background 0.3s,
+      color 0.3s;
+    font-size: 0.85rem;
+  }
+  &_title:nth-child(2) {
+    border-radius: 0;
+    border-right: 0.05rem solid #dfe5ec;
+    border-left: 0.05rem solid #dfe5ec;
+  }
+  &_title:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &_title:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  &_title:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+}
+
+.sorting:nth-child(2) {
+  border-radius: none;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: rgb(11, 12, 10);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #007bff;
+}
