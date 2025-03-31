@@ -12,8 +12,7 @@ function TicketList() {
   );
 
   const [loadedTicketsCount, setLoadedTicketsCount] = useState(0);
-  const [visibleTicketsCount, setVisibleTicketsCount] = useState(5); // Добавляем состояние для отображаемых билетов
-
+  const [visibleTicketsCount, setVisibleTicketsCount] = useState(5);
   useEffect(() => {
     if (!searchId && !isLoading && !error) {
       dispatch(fetchSearchId());
@@ -41,26 +40,30 @@ function TicketList() {
   }, [dispatch, searchId, sortBy, checkboxes, isLoading, loadedTicketsCount]);
 
   const filteredTickets = React.useMemo(() => {
-    return tickets.filter((ticket) => {
-      const stopsCounts = ticket.segments.map((segment) => segment.stops.length);
-      const matchesStops =
-        (checkboxes['0'] && stopsCounts.some((count) => count === 0)) ||
-        (checkboxes['1'] && stopsCounts.some((count) => count === 1)) ||
-        (checkboxes['2'] && stopsCounts.some((count) => count === 2)) ||
-        (checkboxes['3'] && stopsCounts.some((count) => count === 3));
+    return tickets
+      .filter((ticket) => {
+        const stopsCounts = ticket.segments.map((segment) => segment.stops.length);
+        const matchesStops =
+          (checkboxes['0'] && stopsCounts.some((count) => count === 0)) ||
+          (checkboxes['1'] && stopsCounts.some((count) => count === 1)) ||
+          (checkboxes['2'] && stopsCounts.some((count) => count === 2)) ||
+          (checkboxes['3'] && stopsCounts.some((count) => count === 3));
 
-      const matchesSort =
-        sortBy === 'cheapest'
-          ? ticket.price
-          : sortBy === 'fastest'
-            ? ticket.duration
-            : ticket.price;
-
-      return matchesStops && matchesSort;
-    });
+        return matchesStops;
+      })
+      .sort((a, b) => {
+        if (sortBy === 'cheapest') {
+          return a.price - b.price;
+        }
+        if (sortBy === 'fastest') {
+          const durationA = a.segments.reduce((sum, segment) => sum + segment.duration, 0);
+          const durationB = b.segments.reduce((sum, segment) => sum + segment.duration, 0);
+          return durationA - durationB;
+        }
+        return 0;
+      });
   }, [tickets, checkboxes, sortBy]);
 
-  // Функция для показа еще 5 билетов
   const showMoreTickets = () => {
     setVisibleTicketsCount((prevCount) => prevCount + 5);
   };

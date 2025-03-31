@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
-import filtersReducer from './reducers/filtersReducer'; // Correct relative path
+import filtersReducer from './reducers/filtersReducer';
 
 const store = configureStore({
   reducer: {
