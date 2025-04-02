@@ -61,7 +61,7 @@ const filtersSlice = createSlice({
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.tickets = action.payload.tickets;
+        state.tickets = [...state.tickets, ...action.payload.tickets]; // Добавляем новые билеты
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.isLoading = false;
